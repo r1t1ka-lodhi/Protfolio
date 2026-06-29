@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { useHireModal } from "@/hooks/use-hire-modal";
 
 const NAV_LINKS = [
   { name: "About", href: "#about" },
@@ -13,6 +14,7 @@ const NAV_LINKS = [
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { openModal } = useHireModal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,13 +56,13 @@ export function Navbar() {
               {link.name}
             </a>
           ))}
-          <a
-            href="#contact"
+          <button
+            onClick={openModal}
             className="px-4 py-2 border border-primary text-primary hover:bg-primary/10 transition-colors font-mono text-sm rounded-md"
             data-testid="button-nav-hire"
           >
             Hire Me
-          </a>
+          </button>
         </div>
 
         {/* Mobile Toggle */}
@@ -91,6 +93,12 @@ export function Navbar() {
                   {link.name}
                 </a>
               ))}
+              <button
+                onClick={() => { openModal(); setMobileMenuOpen(false); }}
+                className="px-8 py-3 border border-primary text-primary hover:bg-primary/10 transition-colors font-mono text-xl rounded-md"
+              >
+                Hire Me
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
